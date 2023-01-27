@@ -31,7 +31,8 @@ def Create_isochrone(lon, lat, time, speed=4.5, output='geojson', route='walk'):
 
         streets_graph = ox.graph_from_point([lat, lon], dist=distance, network_type=route, simplify=False)
 
-        center_node = ox.get_nearest_node(streets_graph, (lat, lon), method='euclidean')
+        center_node = ox.distance.nearest_nodes(streets_graph, lat, lon, return_dist=False)
+
 
         streets_graph.add_node('dummy', osmid=999999999, x=lon, y=lat)
         dummy_length = geopy.distance.geodesic((streets_graph.nodes['dummy']['y'], streets_graph.nodes['dummy']['x']),
